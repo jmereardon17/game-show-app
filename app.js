@@ -2,11 +2,14 @@
   Wheel of Success Game
 */
 
-// Create a variable to get the element with the ID of qwerty
+// Create a variable to store the element with the ID of qwerty
 const keyboard = document.getElementById("qwerty");
 
-// Create a variable to get the element with the ID of phrase
+// Create a variable to store the element with the ID of phrase
 const phrase = document.getElementById("phrase");
+
+// Create a variable to store the ul element inside of phrase
+const ul = phrase.querySelector('ul');
 
 // Create a missed variable, initialized to 0, that you’ll use later to keep track of the number of guesses the player has missed (remember, if the player guesses wrong 5 times, they lose the game)
 let missed = 0;
@@ -23,8 +26,11 @@ const phrases = [
   "My precious"
 ];
 
+// Create a variable that will store the random split phrase array
 let charArray;
-const ul = document.querySelector('#phrase ul');
+
+// Create a variable that will store the try list item elements
+const tries = document.querySelectorAll('#scoreboard .tries');
 
 // Create function to generate a random phrase with array parameter
 const getRandomPhraseAsArray = (arr) => {
@@ -53,6 +59,27 @@ const addPhraseToDisplay = (arr) => {
   }
 }
 
+// Create a checkWin function that checks whether the game has been won or lost
+const checkWin = () => {
+  // If the number of letters with class "show" is equal to the number of letters with class "letters", Show the overlay screen with the "win" class and appropriate text
+  let correctLetters = document.querySelectorAll('show');
+  let phraseLength = charArray.length;
+  let screen = document.getElementById('overlay');
+  let title = document.querySelector('.title');
+  startButton.style = "display: none;";
+  if ( correctLetters === phraseLength ) {
+    screen.setAttribute("class", "win");
+    title.textContent = "Woohoo You Won!";
+    screen.style = "display: block;";
+  }
+  // Otherwise, if the number of misses is equal to or greateh than 5, show the overlay screen with the "lose" class and appropriate text
+  else if ( missed >= 5 ) {
+    screen.setAttribute("class", "lose");
+    title.textContent = "Tough Luck, You Lost!"
+    screen.style = "display: block;";
+  }
+}
+
 // Call the getRandomPhraseAsArray function with the phrases array as argument
 getRandomPhraseAsArray(phrases);
 
@@ -69,23 +96,39 @@ startButton.addEventListener('click', () => {
     let letters = document.querySelectorAll('.letter');
     // Loop over the letters
     for (var i = 0; i < letters.length; i += 1) {
-      let letter = letters[i].toLowerCase();
+      let letter = letters[i].textContent.toLowerCase();
       // Check if the letter matches the button the player clicked on
-      if ( key.indexOf(letter) ) {
+      if ( key.textContent.toLowerCase() === letter ) {
         // If there's a match, add the "show" class to the list item containing the letter
-        letter.setAttribute("class", "show");
+        // letter. setAttribute("class", "show");
+        let match = letters[i];
+        match.setAttribute("class", "letter show");
+        return match;
       } // If a match isn't found, return "null"
       else {
         return null;
       }
-      // Use event delegation to listen only to button events from the qwerty element (keyboard)
-      key.addEventListener('click', () => {
-        // When a player chooses a button, add a "chosen" class to that button
-        
-      });
-
     }
   }
+  // Use event delegation to listen only to button events from the qwerty element (keyboard)
+  keyboard.addEventListener('click', () => {
+    // When a player chooses a button, add a "chosen" class to that button
+    if ( event.target.type === 'submit' ) {
+      let button = event.target;
+      button.setAttribute("class", "chosen");
+      button.setAttribute("disabled", "true");
+      checkLetter(button);
+      // Check the value of the letterFound variable. If the value is null, remove one try from the scoreboard.
+      if ( null ) {
+        for (var i = 0; i < tries.length; i += 1) {
+          missed += 1;
+          let chanceGone = tries[i];
+          chanceGone.style = "display:none;";
+        }
+      }
+      checkWin();
+    }
+  });
 });
 
 
