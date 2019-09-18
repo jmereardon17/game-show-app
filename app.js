@@ -71,7 +71,7 @@ startButton.addEventListener('click', () => {
     for (var i = 0; i < letters.length; i += 1) {
       let letter = letters[i].toLowerCase();
       // Check if the letter matches the button the player clicked on
-      if ( clicked.indexOf(letter) ) {
+      if ( key.indexOf(letter) ) {
         // If there's a match, add the "show" class to the list item containing the letter
         letter.setAttribute("class", "show");
       } // If a match isn't found, return "null"
