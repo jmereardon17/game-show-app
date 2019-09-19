@@ -14,6 +14,9 @@ const ul = phrase.querySelector('ul');
 // Create a missed variable, initialized to 0, that you’ll use later to keep track of the number of guesses the player has missed (remember, if the player guesses wrong 5 times, they lose the game)
 let missed = 0;
 
+// Create a letterFound variable which you will use later to check if the player's chosen key matches a character in the phrase.
+let letterFound;
+
 // Create a variable that stores the start button element
 const startButton = document.querySelector('.btn__reset');
 
@@ -96,6 +99,7 @@ startButton.addEventListener('click', () => {
     let letters = document.querySelectorAll('.letter');
     // Loop over the letters
     for (var i = 0; i < letters.length; i += 1) {
+      letterFound = null;
       let letter = letters[i].textContent.toLowerCase();
       // Check if the letter matches the button the player clicked on
       if ( key.textContent.toLowerCase() === letter ) {
@@ -103,10 +107,14 @@ startButton.addEventListener('click', () => {
         // letter. setAttribute("class", "show");
         let match = letters[i];
         match.setAttribute("class", "letter show");
-        return match;
-      } // If a match isn't found, return "null"
-      else {
-        return null;
+        // Update the letterFound variable to true
+        letterFound = true;
+      } // If a match isn't found, check the value of letterFound and create a chanceGone variable that holds the value of the tries missed. Update the chanceGone style so it hides a try and add one to the missed counter variable.
+      if ( letterFound === null ) {
+        console.log(tries[missed]);
+        let chanceGone = tries[missed];
+        chanceGone.style = "display:none;";
+        missed += 1;
       }
     }
   }
@@ -119,13 +127,6 @@ startButton.addEventListener('click', () => {
       button.setAttribute("disabled", "true");
       checkLetter(button);
       // Check the value of the letterFound variable. If the value is null, remove one try from the scoreboard.
-      if ( null ) {
-        for (var i = 0; i < tries.length; i += 1) {
-          missed += 1;
-          let chanceGone = tries[i];
-          chanceGone.style = "display:none;";
-        }
-      }
       checkWin();
     }
   });
