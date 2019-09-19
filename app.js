@@ -95,11 +95,13 @@ startButton.addEventListener('click', () => {
   startButton.parentElement.style = "display: none;";
   // Create a function to check letters, add a parameter for the key the player clicked on
   const checkLetter = (key) => {
+    // Add an initial false value to the letterFound variable
+    letterFound = false;
     // Get all list elements with the class "letter"
     let letters = document.querySelectorAll('.letter');
     // Loop over the letters
     for (var i = 0; i < letters.length; i += 1) {
-      letterFound = null;
+
       let letter = letters[i].textContent.toLowerCase();
       // Check if the letter matches the button the player clicked on
       if ( key.textContent.toLowerCase() === letter ) {
@@ -110,12 +112,12 @@ startButton.addEventListener('click', () => {
         // Update the letterFound variable to true
         letterFound = true;
       } // If a match isn't found, check the value of letterFound and create a chanceGone variable that holds the value of the tries missed. Update the chanceGone style so it hides a try and add one to the missed counter variable.
-      if ( letterFound === null ) {
-        console.log(tries[missed]);
-        let chanceGone = tries[missed];
-        chanceGone.style = "display:none;";
-        missed += 1;
-      }
+    }
+    if (letterFound == false) {
+      console.log(tries[missed]);
+      let chanceGone = tries[missed];
+      chanceGone.style = "display:none;";
+      missed += 1;
     }
   }
   // Use event delegation to listen only to button events from the qwerty element (keyboard)
