@@ -3,8 +3,9 @@ const winScreen = () => {
   $('h3').remove();
   // Hide the start button
   $('.btn__reset').hide();
-  // Fade out and slide the scoreboard
-  scoreboard.style = "transition: transform 1s linear, opacity .5s linear; transform: translateX(100%); opacity: 0;display: none;";
+  // Fade and slide out the scoreboard
+  $('#scoreboard').fadeOut(700);
+  scoreboard.style = "transition: transform .5s cubic-bezier(0.950, 0.050, 0.795, 0.035); transform: translateY(100%);";
   // Fade out the letter ul element
   $('#phrase ul').delay(1000).fadeOut();
   // Fade In win screen
@@ -35,8 +36,9 @@ const loseScreen = () => {
   $('h3').remove();
   // Hide the start button
   $('.btn__reset').hide();
-  // Fade out the scoreboard
-  scoreboard.style = "transition: transform 1s linear, opacity .5s linear; transform: translateX(100%); opacity: 0;display: none;";
+  // Fade and slide out the scoreboard
+  $('#scoreboard').fadeOut(700);
+  scoreboard.style = "transition: transform .5s cubic-bezier(0.950, 0.050, 0.795, 0.035); transform: translateY(100%);";
   // Fade out the letter ul element
   $('#phrase ul').delay(1000).fadeOut();
   // Fade in lose screen
