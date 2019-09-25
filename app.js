@@ -52,6 +52,7 @@ const addPhraseToDisplay = (array) => {
     let ul = phrase.firstElementChild;
     ul.appendChild(li);
   }
+
   if (randomPhrase.length >= 23) {
     let letters = document.querySelectorAll('.letter');
     for (let i = 0; i < letters.length; i += 1) {
@@ -59,6 +60,27 @@ const addPhraseToDisplay = (array) => {
     }
   }
 
+}
+
+const checkLetter = (key) => {
+  letterFound = false;
+  let letters = document.querySelectorAll('.letter');
+
+  for (var i = 0; i < letters.length; i += 1) {
+    let letter = letters[i].textContent.toLowerCase();
+    if ( key.textContent.toLowerCase() === letter ) {
+      let match = letters[i];
+      match.setAttribute("class", "letter show");
+      letterFound = true;
+    }
+  }
+
+  if (letterFound == false) {
+    let chanceGone = tries[missed];
+    chanceGone.style = "opacity: .2;transition: opacity .5s;";
+    missed += 1;
+  }
+  
 }
 
 const checkWin = () => {
@@ -79,6 +101,7 @@ const checkWin = () => {
     screen.setAttribute("class", "lose");
     loseScreen();
   }
+
 }
 
 const resetPhrase = () => {
@@ -89,56 +112,36 @@ const resetPhrase = () => {
 
 const resetButtons = () => {
   let buttons = document.getElementsByTagName('BUTTON');
+
   for (let i = 0; i < buttons.length; i += 1) {
     buttons[i].removeAttribute('disabled');
     buttons[i].removeAttribute('class');
   }
+
 }
 
 const resetTries = () => {
+
   if (missed > 0) {
     for (let i = 0; i < tries.length; i += 1) {
       tries[i].removeAttribute('style');
     }
     missed = 0;
   }
+
 }
 
 getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(randomPhrase);
 
-startButton.addEventListener('click', () => {
-
-  const checkLetter = (key) => {
-    letterFound = false;
-    let letters = document.querySelectorAll('.letter');
-
-    for (var i = 0; i < letters.length; i += 1) {
-      let letter = letters[i].textContent.toLowerCase();
-      if ( key.textContent.toLowerCase() === letter ) {
-        let match = letters[i];
-        match.setAttribute("class", "letter show");
-        letterFound = true;
-      }
-    }
-
-    if (letterFound == false) {
-      let chanceGone = tries[missed];
-      chanceGone.style = "opacity: .2;transition: opacity .5s;";
-      missed += 1;
-    }
-    
+keyboard.addEventListener('click', () => {
+  if ( event.target.type === 'submit' ) {
+    let button = event.target;
+    button.setAttribute("class", "chosen");
+    button.setAttribute("disabled", "true");
+    checkLetter(button);
+    checkWin();
   }
-
-  keyboard.addEventListener('click', () => {
-    if ( event.target.type === 'submit' ) {
-      let button = event.target;
-      button.setAttribute("class", "chosen");
-      button.setAttribute("disabled", "true");
-      checkLetter(button);
-      checkWin();
-    }
-  });
 });
 
 
