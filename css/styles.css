@@ -1,5 +1,5 @@
 /* Main styles */
-@import url('https://fonts.googleapis.com/css?family=Big+Shoulders+Display:400,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Big+Shoulders+Display:400,700|Catamaran:600&display=swap');
 
 /* Variables */
 
@@ -23,7 +23,8 @@
 }
 
 body {
-  font-family: "Helvetica Neue", sans-serif;
+  margin: 0;
+  font-family: "Big Shoulders Display", sans-serif;
   justify-content: space-evenly;
   flex-direction: column;
   display: flex;
@@ -38,22 +39,32 @@ li, ol, ul {
 h2 {
   margin: 0;
   text-transform: uppercase;
-  font-family: 'Big Shoulders Display', sans-serif;
+  font-family: "Big Shoulders Display", sans-serif;
   font-size: var(--font-size-large);
-  margin: 0;
+}
+
+h3 {
+  margin: .25em 0 0;
+  text-transform: uppercase;
+  font-size: 35px;
 }
 
 button {
   margin: 6px;
+  min-width: 50.44px;
+  min-height: 40px;
   border: 1px solid transparent;
   padding: .5rem 1rem;
-  color: var(--color-keys);
+  padding: .2rem 1rem .5rem 1rem;
+  color: var(--color-keys-light);
+  font-family: "Helvetica Neue", sans-serif;
   font-size: var(--font-size-medium);
-  background-color: var(--color-keys-light);
+  background-color: var(--color-keys);
   border-radius: 5px;
   -webkit-transition: var(--transition);
   -o-transition: var(--transition);
   transition: var(--transition);
+  box-shadow: 0px 5px 0px 0px rgba(172, 170, 170, 0.75);
 }
 
 .main-container {
@@ -63,6 +74,7 @@ button {
   height: 100%;
   max-height: 900px;
   text-align: center;
+  perspective: 700px;
 }
 
 .section {
@@ -79,17 +91,18 @@ button {
 /* Phrase */
 
 .letter {
+  font-family: "Catamaran", sans-serif;
   font-size: var(--font-size-medium);
-  font-weight: 400;
   line-height: 2;
   height: 50px;
   width: 50px;
   padding: 5px 1px;
   margin-right: 2px;
-  margin-bottom: 2px;
+  margin-bottom: 4px;
   color: transparent;
   background: var(--color-neutral-light);
   border-radius: 5px;
+  user-select: none;
 }
 
 .space {
@@ -98,8 +111,35 @@ button {
 
 .show {
   color: #fff;
-  background-color: #37474F;
-  transition: background-color 1s;
+  background-color: var(--color-win);
+  transition: transform 1s cubic-bezier(.17, -.62, .27, 1.2), background-color 1.5s;
+  /* transition: transform 1s cubic-bezier(.17,.67,.83,.67), background-color 1.5s; */
+  transform: rotateY(360deg);
+  position: relative;
+}
+
+.show:first-child::before {
+  content: open-quote;
+  font-size: 23px;
+  color: #fff;
+  color: #58985f;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: -3px;
+  left: -5px;
+}
+
+.show:last-child::before {
+  content: close-quote;
+  font-size: 23px;
+  color: #fff;
+  color: #58985f;
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: -3px;
+  right: -5px;
 }
 
 /* Keyboard */
@@ -112,16 +152,17 @@ button {
 .chosen {
   background: var(--color-neutral);
   border-radius: 5px;
+  box-shadow: 0px 5px 0px 0px rgba(172, 170, 170, 0.75),
+              inset 0 3px 5px 0 rgba(0,0,0,0.85);
   font-size: var(--font-size-medium);
   color: #FFFFFF;
 }
 
 .btn__reset {
-  padding: 8px;
+  padding: 12px 15px;
   margin: 50px auto;
   background: #FFFFFF;
   border-radius: 5px;
-  font-size: var(--font-size-medium);
 }
 
 /* Overlay */
@@ -136,7 +177,7 @@ button {
   bottom: 0;
   left: 0;
   right: 0;
-  border-radius: 5px;
+  /* border-radius: 5px; */
 }
 
 .title {
@@ -147,22 +188,24 @@ button {
   background-color: var(--color-start);
 }
 
-.start a {
-  color: var(--color-win);
-}
-
 .win {
   background-color: var(--color-win);
-}
-
-.win a {
-  color: var(--color-win);
 }
 
 .lose {
   background-color: var(--color-lose);
 }
 
+.start a,
+.win a,
 .lose a {
-  color: var(--color-lose);
+  font-family: sans-serif;
+  font-size: 18px;
+  color: var(--color-win);
+  text-transform: uppercase;
+}
+
+.win a,
+.lose a {
+  order: 1;
 }
