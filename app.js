@@ -4,101 +4,94 @@
 
 // Variables
 const startButton = document.querySelector('.btn__reset');
-const keyboard = document.getElementById("qwerty");
-const phraseDiv = document.getElementById("phrase");
+const keyboard = document.getElementById('qwerty');
+const phraseDiv = document.getElementById('phrase');
 const letterList = phraseDiv.querySelector('ul');
-const letters = document.getElementsByClassName('.letter');
-const scoreboard = document.querySelector('#scoreboard');
+const letters = document.getElementsByClassName('letter');
+const scoreboard = document.getElementById('scoreboard');
 const screen = document.getElementById('overlay');
 const title = document.querySelector('.title');
-const tries = document.querySelectorAll('#scoreboard .tries');
+const tries = scoreboard.getElementsByClassName('tries');
 let missed = 0;
 let letterFound;
 
 // Arrays
 const phrases = [
-  "May the Force be with you",
-  "I am your father",
-  "A Dime a Dozen",
-  "A Piece of Cake",
-  "Show me the money",
-  "My precious",
-  "Houston we have a problem",
-  "If you build it he will come",
-  "Hasta la vista baby",
-  "You talking to me",
-  "Nobody puts Baby in a corner",
-  "To infinity and beyond"
+  'May the Force be with you',
+  'I am your father',
+  'A Dime a Dozen',
+  'A Piece of Cake',
+  'Show me the money',
+  'My precious',
+  'Houston we have a problem',
+  'If you build it he will come',
+  'Hasta la vista baby',
+  'You talking to me',
+  'Nobody puts Baby in a corner',
+  'To infinity and beyond'
 ];
 let randomPhrase = [];
 
 // Functions
-const getRandomPhraseAsArray = (array) => {
+const getRandomPhraseAsArray = array => {
   randomPhrase = array[ Math.floor( Math.random() * array.length ) ];
   randomPhrase = randomPhrase.split('');
   return randomPhrase;
 }
 
-const addPhraseToDisplay = (array) => {
+const addPhraseToDisplay = array => {
  
-  for (var i = 0; i < array.length; i += 1) {
-    let li = document.createElement('li');
-    li.textContent = array[i];
+  for (let i = 0; i < array.length; i += 1) {
+    const li = document.createElement('li');
+    let letter = array[i];
+    li.textContent = letter;
     if ( li.textContent !== ' ' ) {
-      li.setAttribute('class', 'letter');
+      li.className = 'letter';
     } else {
-      li.setAttribute('class', 'space');
+      li.className = 'space';
     }
-    let ul = phrase.firstElementChild;
+    const ul = phrase.firstElementChild;
     ul.appendChild(li);
   }
 
   if (randomPhrase.length >= 23) {
-    let letters = document.querySelectorAll('.letter');
     for (let i = 0; i < letters.length; i += 1) {
-      letters[i].style = "width: 45px; height: 45px; line-height: 2;";
+      letters[i].style = 'width: 45px; height: 45px; line-height: 2;';
     }
   }
 
 }
 
-const checkLetter = (key) => {
+const checkLetter = input => {
   letterFound = false;
-  let letters = document.querySelectorAll('.letter');
+  let key = input.textContent;
 
-  for (var i = 0; i < letters.length; i += 1) {
+  for (let i = 0; i < letters.length; i += 1) {
     let letter = letters[i].textContent.toLowerCase();
-    if ( key.textContent.toLowerCase() === letter ) {
+    if ( key === letter ) {
       let match = letters[i];
-      match.setAttribute("class", "letter show");
+      match.className = 'letter show';
       letterFound = true;
     }
   }
 
   if (letterFound == false) {
     let chanceGone = tries[missed];
-    chanceGone.style = "opacity: .2;transition: opacity .5s;";
+    chanceGone.style = 'opacity: .2; transition: opacity .5s;';
     missed += 1;
   }
   
 }
 
 const checkWin = () => {
-  let correctLetters = document.querySelectorAll('.show').length;
+  let numOfLetters = letters.length;
+  let numOfCorrectLetters = document.querySelectorAll('.show').length;
 
-  for (var i = 0; i < randomPhrase.length; i += 1) {
-    let phraseLength = randomPhrase[i];
-    if (phraseLength.indexOf(" ") > -1) {
-      randomPhrase.splice(i, 1);
-      i--;
-    }
-  }
-
-  if ( correctLetters === randomPhrase.length ) {
-    screen.setAttribute("class", "win");
+  if ( numOfCorrectLetters === numOfLetters ) {
+    screen.className = 'win';
     winScreen();
   } else if ( missed >= 5 ) {
-    screen.setAttribute("class", "lose");
+    screen.className = 'lose';
     loseScreen();
   }
 
@@ -134,11 +127,11 @@ const resetTries = () => {
 getRandomPhraseAsArray(phrases);
 addPhraseToDisplay(randomPhrase);
 
-keyboard.addEventListener('click', () => {
+keyboard.addEventListener('click', (event) => {
   if ( event.target.type === 'submit' ) {
     let button = event.target;
-    button.setAttribute("class", "chosen");
-    button.setAttribute("disabled", "true");
+    button.className = 'chosen'
+    button.setAttribute('disabled', 'true');
     checkLetter(button);
     checkWin();
   }
