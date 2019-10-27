@@ -199,6 +199,7 @@ button {
 .start a,
 .win a,
 .lose a {
+  cursor: pointer;
   font-family: sans-serif;
   font-size: 18px;
   color: var(--color-win);
