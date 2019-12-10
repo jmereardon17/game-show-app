@@ -18,6 +18,6 @@ I also went for the Exceeds Expectations Grading where I had to:
 - Add a button to the “success” and “failure” screens that reset the game. I had to recreate the buttons for the keyboard, generate a new random phrase, and set the number of misses to zero.
 
 Browsers tested for compatibility:
-
 Chrome
+
 Grade: Exceeds Expectations
